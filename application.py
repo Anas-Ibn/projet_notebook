@@ -22,6 +22,31 @@ df = load_data()
 # Titre principal de l'application
 st.title("📊 Analyse des Salaires Data Science 2023")
 
+# Section des filtres avancés
+st.subheader("🎯 Filtres Avancés")
+
+# Création de 3 colonnes pour les filtres
+col1, col2, col3 = st.columns(3)
+
+# Filtre 1: Niveau d'expérience
+with col1:
+    exp_filter = st.multiselect("Expérience:", df['experience_level'].unique(), df['experience_level'].unique())
+
+# Filtre 2: Taille d'entreprise
+with col2:
+    size_filter = st.multiselect("Taille:", df['company_size'].unique(), df['company_size'].unique())
+
+# Filtre 3: Ratio de télétravail
+with col3:
+    remote_filter = st.multiselect("Télétravail:", sorted(df['remote_ratio'].unique()), sorted(df['remote_ratio'].unique()))
+
+# Application des filtres sur le dataframe
+df = df[(df['experience_level'].isin(exp_filter)) & 
+        (df['company_size'].isin(size_filter)) & 
+        (df['remote_ratio'].isin(remote_filter))]
+
+st.markdown("---")  # Ligne de séparation
+
 # Section des métriques principales - 4 colonnes
 col1, col2, col3, col4 = st.columns(4)
 # Affichage du salaire moyen
@@ -134,29 +159,4 @@ with tab4:
                         title='Relation Télétravail - Salaire', opacity=0.5)
         st.plotly_chart(fig, use_container_width=True)
 
-# Section des filtres avancés
-st.markdown("---")  # Ligne de séparation
-st.subheader("🎯 Filtres Avancés")
 
-# Création de 3 colonnes pour les filtres
-col1, col2, col3 = st.columns(3)
-
-# Filtre 1: Niveau d'expérience
-with col1:
-    exp_filter = st.multiselect("Expérience:", df['experience_level'].unique(), df['experience_level'].unique())
-
-# Filtre 2: Taille d'entreprise
-with col2:
-    size_filter = st.multiselect("Taille:", df['company_size'].unique(), df['company_size'].unique())
-
-# Filtre 3: Ratio de télétravail
-with col3:
-    remote_filter = st.multiselect("Télétravail:", sorted(df['remote_ratio'].unique()), sorted(df['remote_ratio'].unique()))
-
-# Application des filtres sur le dataframe
-df_filtered = df[(df['experience_level'].isin(exp_filter)) & 
-                 (df['company_size'].isin(size_filter)) & 
-                 (df['remote_ratio'].isin(remote_filter))]
-
-# Affichage des résultats filtrés
-st.info(f"📊 {len(df_filtered)} enregistrements | Salaire moyen: ${df_filtered['salary_in_usd'].mean():,.0f}")
