@@ -1,3 +1,11 @@
+# Ibnouali Anas - Yenam Dossou
+# APP: https://dssalariesanasyenam2.streamlit.app/
+# Git : https://github.com/Anas-Ibn/projet_notebook?tab=readme-ov-file
+
+
+
+
+
 # Importation des bibliothèques nécessaires
 import os  # Pour la gestion des chemins de fichiers
 import pandas as pd  # Pour la manipulation des données
@@ -158,5 +166,14 @@ with tab4:
         fig = px.scatter(df, x='remote_ratio', y='salary_in_usd', trendline="ols",
                         title='Relation Télétravail - Salaire', opacity=0.5)
         st.plotly_chart(fig, use_container_width=True)
+    
+    # Tableau croisé: Heatmap des salaires par expérience et télétravail
+    st.subheader("🔥 Carte de Chaleur: Salaire Moyen par Expérience et Télétravail")
+    pivot_table = df.pivot_table(index='experience_level', columns='remote_ratio', 
+                                  values='salary_in_usd', aggfunc='mean')
+    fig = px.imshow(pivot_table, text_auto='.0f', aspect='auto',
+                    labels=dict(x='Ratio de Télétravail (%)', y='Niveau d\'Expérience', color='Salaire (USD)'),
+                    title='Salaire Moyen par Niveau d\'Expérience et Télétravail')
+    st.plotly_chart(fig, use_container_width=True)
 
 
