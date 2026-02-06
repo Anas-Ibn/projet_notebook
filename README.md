@@ -29,4 +29,4 @@ pip install pandas streamlit plotly kagglehub
 streamlit run application.py
 ```
 ## Page web
-L'application est disponible au lien suivant [Data Science Salaries 2023 -Streamlit- Yenam & Anas](hhttps://dssalariesanasyenam2.streamlit.app/)
+L'application est disponible au lien suivant [Data Science Salaries 2023 -Streamlit- Yenam & Anas](https://dssalariesanasyenam2.streamlit.app/)
